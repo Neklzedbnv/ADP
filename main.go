@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"os"
 
 	"ADP/Hotel"
 	"ADP/Employee"
@@ -10,40 +11,218 @@ import (
 )
 
 func main() {
-	
-	fmt.Println("\n--- Hotel ---")
-	h := Hotel.NewHotel()
-	h.AddRoom("101", "Single", 100)
-	h.AddRoom("102", "Double", 150)
+	for {
+		fmt.Println("\nMAIN MENU")
+		fmt.Println("1. Hotel")
+		fmt.Println("2. Employees")
+		fmt.Println("3. Gym")
+		fmt.Println("4. Wallet")
+		fmt.Println("5. Exit")
+		fmt.Print("Choice: ")
 
-	h.CheckIn("101")
-	h.ListVacantRooms()
-	h.CheckOut("101")
+		var choice string
+		fmt.Scan(&choice)
 
-	
-	fmt.Println("\n--- Employees ---")
-	employees := []Employee.Employee{
-		Employee.FullTime{MonthlySalary: 300000, BonusRate: 0.1},
-		Employee.PartTime{HourlyRate: 2000, HoursWorked: 80},
-
+		if choice == "1" {
+			runHotel()
+		} else if choice == "2" {
+			runEmployees()
+		} else if choice == "3" {
+			runGym()
+		} else if choice == "4" {
+			runWallet()
+		} else if choice == "5" {
+			fmt.Println("Goodbye!")
+			os.Exit(0)
+		} else {
+			fmt.Println("Wrong choice")
+		}
 	}
-
-	for i := 0; i < len(employees); i++ {
-    fmt.Println("Salary:", employees[i].CalculateSalary())
-    }
+}
 
 
 
-	
-	fmt.Println("\n--- Gym ---")
+func runHotel() {
+	hotel := Hotel.NewHotel()
+
+	for {
+		fmt.Println("\nHOTEL MENU")
+		fmt.Println("1. Add room")
+		fmt.Println("2. Check in")
+		fmt.Println("3. Check out")
+		fmt.Println("4. Show vacant rooms")
+		fmt.Println("5. Back")
+		fmt.Print("Choice: ")
+
+		var cmd string
+		fmt.Scan(&cmd)
+
+		if cmd == "1" {
+			var room Hotel.Room
+
+			fmt.Print("Room number: ")
+			fmt.Scan(&room.RoomNumber)
+
+			fmt.Print("Room type: ")
+			fmt.Scan(&room.Type)
+
+			fmt.Print("Price per night: ")
+			fmt.Scan(&room.PricePerNight)
+
+			room.IsOccupied = false
+			hotel.AddRoom(room)
+
+		} else if cmd == "2" {
+			var num string
+			fmt.Print("Room number: ")
+			fmt.Scan(&num)
+			hotel.CheckIn(num)
+
+		} else if cmd == "3" {
+			var num string
+			fmt.Print("Room number: ")
+			fmt.Scan(&num)
+			hotel.CheckOut(num)
+
+		} else if cmd == "4" {
+			hotel.ListVacantRooms()
+
+		} else if cmd == "5" {
+			break
+		} else {
+			fmt.Println("Wrong input")
+		}
+	}
+}
+
+
+
+func runEmployees() {
+	var employees []Employee.Employee
+
+	for {
+		fmt.Println("\nEMPLOYEES MENU")
+		fmt.Println("1. Add full-time employee")
+		fmt.Println("2. Add part-time employee")
+		fmt.Println("3. Show salaries")
+		fmt.Println("4. Back")
+		fmt.Print("Choice: ")
+
+		var cmd string
+		fmt.Scan(&cmd)
+
+		if cmd == "1" {
+			var emp Employee.FullTime
+
+			fmt.Print("Monthly salary: ")
+			fmt.Scan(&emp.MonthlySalary)
+
+			fmt.Print("Bonus rate: ")
+			fmt.Scan(&emp.BonusRate)
+
+			employees = append(employees, emp)
+
+		} else if cmd == "2" {
+			var emp Employee.PartTime
+
+			fmt.Print("Hourly rate: ")
+			fmt.Scan(&emp.HourlyRate)
+
+			fmt.Print("Hours worked: ")
+			fmt.Scan(&emp.HoursWorked)
+
+			employees = append(employees, emp)
+
+		} else if cmd == "3" {
+			for i := 0; i < len(employees); i++ {
+				fmt.Println("Employee", i+1, "salary:",
+					employees[i].CalculateSalary())
+			}
+
+		} else if cmd == "4" {
+			break
+		} else {
+			fmt.Println("Wrong input")
+		}
+	}
+}
+
+
+
+func runGym() {
 	gym := Gym.NewGym()
-	gym.AddMember(1, Gym.BasicMember{Name: "Nickole"})
-	gym.AddMember(2, Gym.PremiumMember{Name: "Dane"})
-	gym.ListMembers()
+	id := uint64(1)
 
-	fmt.Println("\n--- Wallet ---")
+	for {
+		fmt.Println("\nGYM MENU")
+		fmt.Println("1. Add basic member")
+		fmt.Println("2. Add premium member")
+		fmt.Println("3. List members")
+		fmt.Println("4. Back")
+		fmt.Print("Choice: ")
+
+		var cmd string
+		fmt.Scan(&cmd)
+
+		if cmd == "1" {
+			var m Gym.BasicMember
+			fmt.Print("Name: ")
+			fmt.Scan(&m.Name)
+
+			gym.AddMember(id, m)
+			id++
+
+		} else if cmd == "2" {
+			var m Gym.PremiumMember
+			fmt.Print("Name: ")
+			fmt.Scan(&m.Name)
+
+			gym.AddMember(id, m)
+			id++
+
+		} else if cmd == "3" {
+			gym.ListMembers()
+
+		} else if cmd == "4" {
+			break
+		} else {
+			fmt.Println("Wrong input")
+		}
+	}
+}
+
+
+
+func runWallet() {
 	w := Wallet.NewWallet()
-	w.AddMoney(1000)
-	w.SpendMoney(300)
-	fmt.Println("Balance:", w.GetBalance())
+
+	for {
+		fmt.Println("\nWALLET MENU")
+		fmt.Println("Balance:", w.GetBalance())
+		fmt.Println("1. Add money")
+		fmt.Println("2. Spend money")
+		fmt.Println("3. Back")
+		fmt.Print("Choice: ")
+
+		var cmd string
+		fmt.Scan(&cmd)
+
+		if cmd == "1" {
+			var amount float64
+			fmt.Print("Amount: ")
+			fmt.Scan(&amount)
+			w.AddMoney(amount)
+
+		} else if cmd == "2" {
+			var amount float64
+			fmt.Print("Amount: ")
+			fmt.Scan(&amount)
+			w.SpendMoney(amount)
+
+		} else if cmd == "3" {
+			break
+		} else {
+			fmt.Println("Wrong input")
+		}
+	}
 }

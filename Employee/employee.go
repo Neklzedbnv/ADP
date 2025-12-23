@@ -10,7 +10,7 @@ type FullTime struct {
 }
 
 func (f FullTime) CalculateSalary() float64 {
-	return f.MonthlySalary + (f.MonthlySalary * f.BonusRate)
+	return f.MonthlySalary + f.MonthlySalary*f.BonusRate
 }
 
 type PartTime struct {

@@ -35,7 +35,7 @@ func (g *Gym) AddMember(id uint64, m Member) {
 }
 
 func (g *Gym) ListMembers() {
-	for _, m := range g.Members {
-		fmt.Println(m.GetDetails())
+	for key := range g.Members {
+		fmt.Println(g.Members[key].GetDetails())
 	}
 }
