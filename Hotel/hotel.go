@@ -24,10 +24,23 @@ func (h *Hotel) AddRoom(room Room) {
 
 func (h *Hotel) CheckIn(number string) {
 	room := h.Rooms[number]
+
+	if room.RoomNumber == "" {
+		fmt.Println("Room", number, "does not exist")
+		return
+	}
+
+	if room.IsOccupied == true {
+		fmt.Println("Room", number, "is already occupied")
+		return
+	}
+
 	room.IsOccupied = true
 	h.Rooms[number] = room
 	fmt.Println("Checked in:", number)
 }
+
+
 
 func (h *Hotel) CheckOut(number string) {
 	room := h.Rooms[number]

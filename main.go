@@ -4,9 +4,9 @@ import (
 	"fmt"
 	"os"
 
-	"ADP/Hotel"
 	"ADP/Employee"
 	"ADP/Gym"
+	"ADP/Hotel"
 	"ADP/Wallet"
 )
 
@@ -23,23 +23,23 @@ func main() {
 		var choice string
 		fmt.Scan(&choice)
 
-		if choice == "1" {
+		switch choice {
+		case "1":
 			runHotel()
-		} else if choice == "2" {
+		case "2":
 			runEmployees()
-		} else if choice == "3" {
+		case "3":
 			runGym()
-		} else if choice == "4" {
+		case "4":
 			runWallet()
-		} else if choice == "5" {
+		case "5":
 			fmt.Println("Goodbye!")
 			os.Exit(0)
-		} else {
+		default:
 			fmt.Println("Wrong choice")
 		}
 	}
 }
-
 
 
 func runHotel() {
@@ -57,7 +57,8 @@ func runHotel() {
 		var cmd string
 		fmt.Scan(&cmd)
 
-		if cmd == "1" {
+		switch cmd {
+		case "1":
 			var room Hotel.Room
 
 			fmt.Print("Room number: ")
@@ -72,29 +73,29 @@ func runHotel() {
 			room.IsOccupied = false
 			hotel.AddRoom(room)
 
-		} else if cmd == "2" {
+		case "2":
 			var num string
 			fmt.Print("Room number: ")
 			fmt.Scan(&num)
 			hotel.CheckIn(num)
 
-		} else if cmd == "3" {
+		case "3":
 			var num string
 			fmt.Print("Room number: ")
 			fmt.Scan(&num)
 			hotel.CheckOut(num)
 
-		} else if cmd == "4" {
+		case "4":
 			hotel.ListVacantRooms()
 
-		} else if cmd == "5" {
-			break
-		} else {
+		case "5":
+			return
+
+		default:
 			fmt.Println("Wrong input")
 		}
 	}
 }
-
 
 
 func runEmployees() {
@@ -111,9 +112,9 @@ func runEmployees() {
 		var cmd string
 		fmt.Scan(&cmd)
 
-		if cmd == "1" {
+		switch cmd {
+		case "1":
 			var emp Employee.FullTime
-
 			fmt.Print("Monthly salary: ")
 			fmt.Scan(&emp.MonthlySalary)
 
@@ -122,9 +123,8 @@ func runEmployees() {
 
 			employees = append(employees, emp)
 
-		} else if cmd == "2" {
+		case "2":
 			var emp Employee.PartTime
-
 			fmt.Print("Hourly rate: ")
 			fmt.Scan(&emp.HourlyRate)
 
@@ -133,20 +133,20 @@ func runEmployees() {
 
 			employees = append(employees, emp)
 
-		} else if cmd == "3" {
+		case "3":
 			for i := 0; i < len(employees); i++ {
 				fmt.Println("Employee", i+1, "salary:",
 					employees[i].CalculateSalary())
 			}
 
-		} else if cmd == "4" {
-			break
-		} else {
+		case "4":
+			return
+
+		default:
 			fmt.Println("Wrong input")
 		}
 	}
 }
-
 
 
 func runGym() {
@@ -164,7 +164,8 @@ func runGym() {
 		var cmd string
 		fmt.Scan(&cmd)
 
-		if cmd == "1" {
+		switch cmd {
+		case "1":
 			var m Gym.BasicMember
 			fmt.Print("Name: ")
 			fmt.Scan(&m.Name)
@@ -172,7 +173,7 @@ func runGym() {
 			gym.AddMember(id, m)
 			id++
 
-		} else if cmd == "2" {
+		case "2":
 			var m Gym.PremiumMember
 			fmt.Print("Name: ")
 			fmt.Scan(&m.Name)
@@ -180,17 +181,17 @@ func runGym() {
 			gym.AddMember(id, m)
 			id++
 
-		} else if cmd == "3" {
+		case "3":
 			gym.ListMembers()
 
-		} else if cmd == "4" {
-			break
-		} else {
+		case "4":
+			return
+
+		default:
 			fmt.Println("Wrong input")
 		}
 	}
 }
-
 
 
 func runWallet() {
@@ -207,21 +208,23 @@ func runWallet() {
 		var cmd string
 		fmt.Scan(&cmd)
 
-		if cmd == "1" {
+		switch cmd {
+		case "1":
 			var amount float64
 			fmt.Print("Amount: ")
 			fmt.Scan(&amount)
 			w.AddMoney(amount)
 
-		} else if cmd == "2" {
+		case "2":
 			var amount float64
 			fmt.Print("Amount: ")
 			fmt.Scan(&amount)
 			w.SpendMoney(amount)
 
-		} else if cmd == "3" {
-			break
-		} else {
+		case "3":
+			return
+
+		default:
 			fmt.Println("Wrong input")
 		}
 	}
